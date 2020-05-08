@@ -1,16 +1,17 @@
 body {
   font-family:'Roboto';
-  width:600px; 
+  width: fit-content;
+  
   margin:30px auto 0; 
   display:block; 
   background:#FFF;
-  padding:10px 50px 50px;
+  padding:10px 20px 20px;
 }
 input 				{
   font-size:18px;
   padding:10px 10px 10px 5px;
   display:block;
-  width:300px;
+  width:280px;
   border:none;
   border-bottom:1px solid #757575;
 }
