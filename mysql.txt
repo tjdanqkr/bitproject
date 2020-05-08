@@ -1,0 +1,9 @@
+#mysql 쿼리
+
+show databases;
+
+create database project;
+
+use project;
+
+create table members(id int not null, password varchar(128) not null,name varchar(128) not null, age int not null,primary key(id));

@@ -11,27 +11,27 @@ function Join() {
   const [checkmessage, setCheckMessage] = useState("");
   const {register, handleSubmit, reset, errors} = useForm();
   
+
   const idch = () => {
     //setIdcheck(true);
-    // const post = {
-    //   id: id,
-    // };
-    // setCheckMessage("성공");
-    // fetch("/api/idcheck", {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(post),
-    // })
-    //   .then((response) => response.text())
-    //   .then((message) => {
-    //     setCheckMessage(message);
-    //   });
-    console.log(id);
-    if(test===id){
-        console.log("sus");
-    }
+    const post = {
+      id: id,
+    };
+    fetch("/checkId", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(post),
+    })
+      .then((response) => response.text())
+      .then((message) => {
+        console.log(message);
+        setCheckMessage(message);
+        setIdcheck(true);
+      });
+      
+    
   };
   const OnSubmit = ((e) =>{
     //e.preventdefault();
@@ -52,7 +52,7 @@ function Join() {
       <form onSubmit={handleSubmit(OnSubmit)}>
         <input type="text"  name="Id" onChange={(e) => setId(e.target.value)} placeholder="id" />
         <input type="button" onClick={idch} value="아이디 중복 검사"/>
-        {idcheck ? { checkmessage } : null}
+        {(idcheck===true ? <p>{checkmessage}</p>  : <p>중복입니다</p>)}
         <input
           type="password" name="Pw"
           onChange={(e) => setPw(e.target.value)}
