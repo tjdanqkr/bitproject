@@ -1,12 +1,12 @@
 cd front
 
-npm init 
+npm install pkg 
 
 yarn start
 
 cd webview
 
-npm init
+npm install pkg
 
 yarn android
 
