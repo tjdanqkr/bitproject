@@ -1,11 +1,12 @@
 cd front
 
+npm init 
+
 yarn start
 
 cd webview
 
-<<<<<<< HEAD
+npm init
+
 yarn android
-=======
-yarn android
->>>>>>> ca1ac2e817f48afc0478373932739e6421af46ad
+
