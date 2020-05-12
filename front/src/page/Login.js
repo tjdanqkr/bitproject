@@ -9,15 +9,29 @@ function Login() {
 
   const OnSubmit = (e) => {
     //e.preventdefault();
-    console.log(id);
-    console.log(pw);
-    //   const post = {
-    //     id: id,
-    //     pw: pw
-    //   };
-    window.sessionStorage.setItem("id",id);
-    console.log("sus");
-    window.location.replace('/');
+    const post = {
+      id: id,
+      pw: pw,
+    };
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(post),
+    })
+      .then((response) => response.text())
+      .then((message) => {
+        console.log(message);
+        if (message === "re") {
+          alert("다시 시도");
+          reset();
+        } else {
+          window.sessionStorage.setItem("id", id);
+          console.log("sus");
+          window.location.replace("/");
+        }
+      });
   };
 
   return (
@@ -29,14 +43,14 @@ function Login() {
           onChange={(e) => setId(e.target.value)}
           placeholder="id"
         />
-        
+
         <input
           type="password"
           name="pw"
           onChange={(e) => setPw(e.target.value)}
           placeholder="password"
         />
-        
+
         <input type="submit" value="Login" />
         <Link to="/join">
           <button>Join</button>{" "}

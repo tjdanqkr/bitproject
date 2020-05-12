@@ -43,7 +43,7 @@ public class MemeberServiceImpl implements MemberService {
     public boolean loginMember(MemberModel member)
     {
         int result = dao.loginMember(member);
-
+        System.out.println(result);
         if(result>0)//id와 name에 맞는게 하나이상이라도 있다면 성공
         {
             return true;

@@ -54,18 +54,18 @@ public class MemberController {
     }
 
     @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String insert(HttpServletRequest request) throws UnsupportedEncodingException{
+    public String insert(@RequestBody final HashMap<String,Object> post, HttpServletRequest request) throws UnsupportedEncodingException{
         request.setCharacterEncoding("UTF-8");
         MemberModel member = new MemberModel();
-        member.setId((request.getParameter("id")));
-        member.setName((String)request.getParameter("name"));
-        member.setPassword((String)request.getParameter("password"));
-        member.setAge(Integer.parseInt(request.getParameter("age")));
+        member.setId(post.get("id").toString());
+        member.setName(post.get("name").toString());
+        member.setPassword(post.get("pw").toString());
+        member.setAge(Integer.parseInt(post.get("age").toString()));
 
         memberService.insertMember(member);
 //        ModelAndView result = new ModelAndView("redirect:/list");
         //굳이 ModelAndView객체를 사용한 이유는 말그대로 Model객체와 view에 넘겨줄 페이지값을 가진 return값을 합친것이다.얘를 사용하면 실행할 페이지이름을 지정해주거나 생성시 페이지의 이름 생성가능
-        return "redirect:/list"; //controller에서 할꺼 다 하고 view에 던져줄것.
+        return "회원가입 완료"; //controller에서 할꺼 다 하고 view에 던져줄것.
     }
 
     @RequestMapping(value="/delete", method=RequestMethod.POST)
@@ -101,19 +101,20 @@ public class MemberController {
     }
 
     @RequestMapping(value="/login" , method=RequestMethod.POST)
-    public String login(HttpServletRequest request) throws  UnsupportedEncodingException
+    public String login(@RequestBody final HashMap<String,Object> post ,HttpServletRequest request) throws  UnsupportedEncodingException
     {
         request.setCharacterEncoding("UTF-8");
         MemberModel member = new MemberModel();
-        request.getSession().setAttribute("id",request.getParameter("id"));//id를 잠시 보관해두기 위한 단계
-        member.setId((request.getParameter("id")));
-        member.setPassword((String)request.getParameter("password"));
+        request.getSession().setAttribute("id",post.get("id").toString());//id를 잠시 보관해두기 위한 단계
+        member.setId(post.get("id").toString());
+        member.setPassword(post.get("pw").toString());
+        System.out.println(post.get("id").toString());
         boolean result = memberService.loginMember(member);
         if(result)
         {
-            return "redirect:/memberdetail";//로그인 성공
+            return "su";//로그인 성공
         }
-        return "redirect:/list"; //로그인 실패
+        return "re"; //로그인 실패
     }
 
     
@@ -121,19 +122,16 @@ public class MemberController {
     @RequestMapping(value="/checkId",method=RequestMethod.POST)
     public String checkId(@RequestBody final HashMap<String,Object> post, HttpServletRequest request) throws Exception{
         request.setCharacterEncoding("UTF-8");
-        System.out.println("1");
         MemberModel member = new MemberModel();
         System.out.println(post.get("id").toString());
         member.setId(post.get("id").toString());
         boolean result = memberService.checkId(member);
         if(result)
         {
-            System.out.println("중복 안됨");
             return "중복 안됨"; //중복 안된경우
         }
         else
         {
-            System.out.println("중복임");
             return "중복임"; //중복인경우
         }
 

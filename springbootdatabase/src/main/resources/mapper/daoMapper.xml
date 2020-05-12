@@ -19,7 +19,7 @@
     </update>
 
     <select id="loginMember" resultType="Integer">
-        select * from members WHERE id = #{id} AND password = #{password}
+        select COUNT(*) from members WHERE id = #{id} AND password = #{password}
     </select>
 
     <select id="findMember" resultType="com.springbootdatabase.model.MemberModel">

@@ -130,3 +130,22 @@ a{
   position:relative; 
   margin-bottom:45px; 
 }
+
+.map{
+  width: 500px;
+  height: 400px;
+}
+.area{
+  font: bold 16px 굴림,dotum,arial,sans-serif;
+  background:#FFFFFFF0;
+}
+
+.back{
+  width: 50px;
+  height: 50px;
+}
+.backbu{
+  padding: unset;
+  width: 50px;
+  height: 50px;
+}

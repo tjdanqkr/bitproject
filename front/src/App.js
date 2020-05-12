@@ -5,6 +5,7 @@ import {Route} from 'react-router-dom';
 import Indextem from './templete/Indextem';
 import Logintem from './templete/Logintem';
 import Jointem from './templete/Jointem';
+import Maptem from './templete/Maptem';
 
 
 
@@ -14,7 +15,7 @@ function App() {
       <Route exact path='/' component={Indextem}></Route>
       <Route path='/login' component={Logintem}></Route>
       <Route path='/join' component={Jointem}></Route> 
-
+      <Route path='/Map' component={Maptem}></Route>
     </>
   );
 }
