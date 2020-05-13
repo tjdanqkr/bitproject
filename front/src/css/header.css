@@ -1,0 +1,15 @@
+.icons{
+    display: flex;
+    position: relative;
+    left: 5%;
+  }
+  
+  .Home{
+    width: 25px;
+    height: 25px;
+    padding: 25px;
+  }
+  .header{
+    display: flex;
+    padding-bottom: 99px;
+  }

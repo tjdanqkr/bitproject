@@ -2,7 +2,7 @@ import React from 'react';
 
 import Header from '../page/Header';
 import Join from '../page/Join';
-
+import { FiUserMinus } from "react-icons/fi"; 
 
 function Logout() {
 
@@ -13,7 +13,7 @@ function Logout() {
 
   return (
     <div className="logout">
-        <button onClick={OnClick}>logout</button>
+        <FiUserMinus onClick={OnClick}></FiUserMinus>
 
     </div>
     

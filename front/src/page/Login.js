@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import "../css/login.css";
+import { FiUserPlus, FiMap,FiUserMinus } from "react-icons/fi";
 
 function Login() {
   const [id, setId] = useState("");
@@ -53,7 +55,8 @@ function Login() {
 
         <input type="submit" value="Login" />
         <Link to="/join">
-          <button>Join</button>{" "}
+          <FiUserPlus></FiUserPlus>
+          <h3>join</h3>
         </Link>
       </form>
     </div>

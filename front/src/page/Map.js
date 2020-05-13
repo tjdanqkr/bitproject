@@ -1,11 +1,12 @@
 /*global kakao*/
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import a from "../json/4.geojson";
 import $ from "jquery";
-import back from "../images/back.png";
+import "../css/map.css";
 import { Link } from "react-router-dom";
 
 function Map() {
+  const [gu, setGu]=useState("");
   useEffect(() => {
     const script = document.createElement("script");
     script.async = true;
@@ -104,8 +105,8 @@ function Map() {
           // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
           kakao.maps.event.addListener(polygon, "click", function () {
             // 현재 지도 레벨에서 2레벨 확대한 레벨
-            var level = map.getLevel() - 2;
-
+            var level = map.getLevel() - 3;
+            setGu(name);
             // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
             map.setLevel(level, {
               anchor: centroid(points),
@@ -142,13 +143,16 @@ function Map() {
       });
     };
   }, []);
-  const onClick =(e) =>{
-    window.history.back();
+  const namei=()=>{
+    console.log(gu);
   }
   return (
     <>
-      <button onClick={onClick} className="backbu"><img src={back} className="back"></img></button>
+     
       <div className="map" id="map"></div>
+      <button onClick={namei}>
+        구이름 확인
+      </button>
     </>
     //<Test></Test>
     //<Test2></Test2>

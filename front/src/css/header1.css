@@ -1,0 +1,9 @@
+.header1{
+    display: flex;
+    padding-bottom: 99px;
+    
+  }
+  .home{
+      position: absolute;
+      left: 80%;
+  }

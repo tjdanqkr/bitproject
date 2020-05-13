@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import "../css/join.css";
 
 function Join() {
   const [idcheck, setIdcheck] = useState(false);
@@ -70,7 +71,7 @@ function Join() {
           placeholder="id"
         />
         <input type="button" onClick={idch} value="아이디 중복 검사" />
-        {idcheck === true ? <p>{checkmessage}</p> : <p>중복입니다</p>}
+        {idcheck === true ? <p>{checkmessage}</p> : <p></p>}
         <input
           type="password"
           name="Pw"
