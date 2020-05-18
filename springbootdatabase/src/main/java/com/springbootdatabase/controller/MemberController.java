@@ -9,14 +9,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.io.Console;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MemberController {
@@ -135,5 +137,73 @@ public class MemberController {
             return "중복임"; //중복인경우
         }
 
+    }
+    @RequestMapping(value="/image",method=RequestMethod.POST)
+    public String img( HttpServletRequest request) throws Exception{
+        Process proc=null;
+        String str =null;
+        try{
+            List<String> cmd1 = new ArrayList<String>();
+            cmd1.add("cmd");
+            cmd1.add("/c");
+            cmd1.add(" C:/react/re-st/demo1/src/main/python/Project_test/test1.py");
+            
+            //cmd1.add("python test2.py");
+            proc = new ProcessBuilder(cmd1).start();
+            BufferedReader std = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            while((str = std.readLine())!=null){
+                System.out.println(str);
+                System.out.println("줄바꿈");
+            }
+        }catch(Exception e){
+            System.out.println(e);
+
+        }finally{
+            System.out.println("fa");
+        }
+
+
+        return "ra";
+
+    }
+    @ResponseBody
+    @RequestMapping(value = "/map", method = RequestMethod.POST)//python파일을 실행시키고, json파일로 넘겨준다.넘겨줄때 반환형 주의할것.
+    public String pyclo(@RequestBody HashMap<String,Object> map, HttpServletRequest request) throws Exception{
+        request.setCharacterEncoding("UTF-8");
+
+
+        //파이썬 실행
+        String path = "C:\\react\\project\\springbootdatabase\\src\\main\\java\\com\\springbootdatabase\\hellopython\\"; //python 실행 경로
+        String py = "test.py";
+        try{
+
+            String a=path+py;
+            String cmdArray =  "cmd /c python "+a + " " +map.get("gu")+" "+ map.get("dong");
+            //실행할 프로그램과 전달할 인수를 문자열 배열로
+            System.out.println(cmdArray);
+
+            Runtime rt = Runtime.getRuntime();
+            Process proc = rt.exec(cmdArray); //시스템 명령어
+
+            InputStream is = proc.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is,"euc-kr");
+            BufferedReader br = new BufferedReader(isr);
+
+            String line;
+            while((line=br.readLine())!= null){
+                System.out.println(line);
+            }
+        }catch(final Exception e){ System.out.println(e); }finally{
+            
+        }
+
+        HashMap<String,Object> hashMap = new HashMap<String,Object>();
+
+        hashMap.put("image1","C:\\Users\\user\\IdeaProjects\\bitproject-master\\springbootdatabase\\image1.png");
+        hashMap.put("image2","C:\\Users\\user\\IdeaProjects\\bitproject-master\\springbootdatabase\\image2.png");
+        
+
+        //return으로 구에 맞는 json파일 ,맞는 image파일, json을 만들어서 보내려면 JsonObject를 생성해서 보내줄것.(return값은 String)
+        return "C:\\Users\\user\\IdeaProjects\\bitproject-master\\springbootdatabase\\image2.png";
     }
 }
