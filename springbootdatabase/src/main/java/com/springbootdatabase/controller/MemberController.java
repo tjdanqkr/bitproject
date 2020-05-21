@@ -204,6 +204,6 @@ public class MemberController {
         
 
         //return으로 구에 맞는 json파일 ,맞는 image파일, json을 만들어서 보내려면 JsonObject를 생성해서 보내줄것.(return값은 String)
-        return "C:\\Users\\user\\IdeaProjects\\bitproject-master\\springbootdatabase\\image2.png";
+        return "http://localhost:8080/graph/image2.png";
     }
 }

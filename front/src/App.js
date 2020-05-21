@@ -7,6 +7,7 @@ import Logintem from './templete/Logintem';
 import Jointem from './templete/Jointem';
 import Maptem from './templete/Maptem';
 import Maptem2 from './templete/Maptem2';
+import Graphtem from './templete/Graphtem';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/map/:gu" component={Maptem2}></Route>
         <Route path='/map' component={Maptem}></Route>
       </Switch>
+      <Route path="/graph1" component={Graphtem}></Route>
     </>
   );
 }
