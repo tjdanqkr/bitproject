@@ -32,8 +32,8 @@ const Map2 = ({ gu1 }) => {
         // var el = document.getElementById("map");
         var mapContainer = document.getElementById("map"), // 지도를 표시할 div
           mapOption = {
-            center: new kakao.maps.LatLng(37.536, 127.0), // 지도의 중심좌표
-            level: 7, // 지도의 확대 레벨
+            center: new kakao.maps.LatLng(window.sessionStorage.getItem("positionx"), window.sessionStorage.getItem("positiony")), // 지도의 중심좌표
+            level: window.sessionStorage.getItem("level"), // 지도의 확대 레벨
           };
 
         var map = new kakao.maps.Map(mapContainer, mapOption);
@@ -62,23 +62,7 @@ const Map2 = ({ gu1 }) => {
         // });
         // 데이터를 가져오기 위해 jQuery를 사용합니다
         // 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
-        function ad(geojson1){
-          var data1 = geojson1.features;
-          var markers1 = $.each(data1, function (i, val1) {
-            if (window.sessionStorage.getItem("gu") === val1.properties.gu)
-              return new kakao.maps.Marker({
-                position: new kakao.maps.LatLng(
-                  val1.geometry.coordinates[0],
-                  val1.geometry.coordinates[1]
-                ),
-              });
-          });
-
-          // 클러스터러에 마커들을 추가합니다
-          clusterer.addMarkers(markers1);
-        }
-        $.getJSON(b, 
-          function (geojson) {
+        $.getJSON(b, function (geojson) {
           console.log("b");
           var data1 = geojson.features;
           var markers1 = $.each(data1, function (i, val1) {
@@ -112,6 +96,7 @@ const Map2 = ({ gu1 }) => {
               displayArea(coordinates, name);
             }
           });
+          
         });
 
         var polygons = []; //function 안 쪽에 지역변수로 넣으니깐 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애줌.  그래서 전역변수로 만듦.
@@ -178,17 +163,23 @@ const Map2 = ({ gu1 }) => {
           // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
           kakao.maps.event.addListener(polygon, "click", function () {
             // 현재 지도 레벨에서 2레벨 확대한 레벨
-            var level = map.getLevel() - 3;
+            var level = map.getLevel() - 2;
             setDong(name);
+            window.sessionStorage.setItem("dong",name);
+            window.sessionStorage.setItem("level",level);
+            var positions =centroid(points);
+            window.sessionStorage.setItem("positionx",positions[0]);
+            window.sessionStorage.setItem("positiony",positions[1]);
+            window.location.replace('/map/'+gu1+"/3");
             // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
-            map.setLevel(level, {
-              anchor: centroid(points),
-              animate: {
-                duration: 350, //확대 애니메이션 시간
-              },
-            });
+            // map.setLevel(level, {
+            //   anchor: centroid(points),
+            //   animate: {
+            //     duration: 350, //확대 애니메이션 시간
+            //   },
+            // });
 
-            deletePolygon(polygons); //폴리곤 제거
+            //deletePolygon(polygons); //폴리곤 제거
           });
         }
         function centroid(points) {
@@ -205,6 +196,8 @@ const Map2 = ({ gu1 }) => {
             y += (p1.y + p2.y) * f;
             area += f * 3;
           }
+          var position= [x/area,y/area];
+          return position;
         }
         function deletePolygon(polygons) {
           for (var i = 0; i < polygons.length; i++) {
@@ -239,9 +232,9 @@ const Map2 = ({ gu1 }) => {
     <>
       <div className="map" id="map"></div>
 
-      <form onSubmit={OnSubmit}>
+      {/* <form onSubmit={OnSubmit}>
         <input type="submit" value="전송"></input>
-      </form>
+      </form> */}
       {/* <div className="icons">
         <FiList onClick={onClick2}></FiList>
 

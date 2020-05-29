@@ -111,7 +111,14 @@ function Map() {
           // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
           kakao.maps.event.addListener(polygon, "click", function () {
             window.sessionStorage.setItem("gu",name);
-            
+            var level = map.getLevel() - 2;
+
+            var positions =centroid(points);
+            var positionx = positions[0];
+            var positiony = positions[1];
+            window.sessionStorage.setItem("level",level);
+            window.sessionStorage.setItem("positionx",positionx);
+            window.sessionStorage.setItem("positiony",positiony);
             window.location.replace('/map/'+sig_cd);
             // // 현재 지도 레벨에서 2레벨 확대한 레벨
             // var level = map.getLevel() - 3;
@@ -141,8 +148,10 @@ function Map() {
             x += (p1.x + p2.x) * f;
             y += (p1.y + p2.y) * f;
             area += f * 3;
+
           }
-          return new kakao.maps.LatLng(x / area, y / area);
+          var position= [x/area,y/area];
+          return position;
         }
         function deletePolygon(polygons) {
           for (var i = 0; i < polygons.length; i++) {
