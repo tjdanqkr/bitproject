@@ -1,57 +1,327 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/graph.css";
-import { Bar, Bubble } from "react-chartjs-2";
+import { Bar, Doughnut } from "react-chartjs-2";
 import Axios from "axios";
+import { produce } from "immer";
+
 function Graphpage1() {
-  const [lists,setLists]=useState();
-  var list;
-  const testdatapro = () => {
-    list={};
-    var datasets = [];
-    var labels= [];
-    var datas = [];
-    var backgroundColor= 'rgba(75,192,192,1)';
-    var borderColor= 'rgba(0,0,0,1)';
-    var borderWidth= 2;
-    Axios.get("/json/testdata.json").then((data) => {
-      var jsondata = data.data.test;
-      for(let i = 0; i<jsondata.length; i++)
+  const [dong, setDong] = useState(window.sessionStorage.getItem("dong"));
+  const [data, setData] = useState({
+    labels: [],
+    datasets: [
       {
-        if (window.sessionStorage.getItem("gu") === jsondata[i].gu) {
-          
-          labels.push(jsondata[i].dong);
-          datas.push(jsondata[i].testdata);
+        label: [],
+        backgroundColor: [],
+        borderColor: [],
+        borderWidth: 2,
+        data: [],
+      },
+    ],
+  });
+  const [data1, setData1] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: dong + " 구매력",
+        backgroundColor: [],
+        borderColor: [],
+        borderWidth: 2,
+        data: [],
+      },
+    ],
+  });
+  const [data2, setData2] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: dong + " 성장성",
+        backgroundColor: [],
+        borderColor: [],
+        borderWidth: 2,
+        data: [],
+      },
+    ],
+  });
+  const [data3, setData3] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: dong + " 집객력",
+        backgroundColor: [],
+        borderColor: [],
+        borderWidth: 2,
+        data: [],
+      },
+    ],
+  });
+  const [data4, setData4] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: dong + " 상권지표",
+        backgroundColor: [],
+        borderColor: [],
+        borderWidth: 2,
+        data: [],
+      },
+    ],
+  });
+  const palete = [
+    "rgb(155,255,255)",
+    "rgb(55,255,255)",
+    "rgb(55,155,255)",
+    "rgb(55,0,255)",
+    "rgb(0,0,155)",
+    "rgb(0,0,55)",
+    "rgb(0,0,0)",
+    "rgb(255,0,0)",
+    "rgb(255,0,55)",
+    "rgb(255,0,155)",
+    "rgb(255,55,55)",
+    "rgb(255,55,155)",
+    "rgb(255,155,255)",
+    "rgb(255,255,255)",
+  ];
+  async function makeData() {
+    const response = await Axios.get("/json/gu1.json");
+    const jsondata = response.data.position;
+    const tempLabels = [];
+    const tempDatasets = [];
+    const tempDatasetbackcol = [];
+    for (let i = 0; i < jsondata.length; i++) {
+      if (window.sessionStorage.getItem("gu") === jsondata[i].gu) {
+        if (window.sessionStorage.getItem("dong") === jsondata[i].dong) {
+          tempLabels.push(jsondata[i].gil);
+          tempDatasets.push(jsondata[i].totalscore);
         }
-      }  
-      datasets.data=datas;
-      datasets.backgroundColor=backgroundColor;
-      datasets.borderColor=(borderColor);
-      datasets.borderWidth=(borderWidth);
-      datasets.label= "서울";
-      list.labels=labels;
-      list.datasets=datasets;
-      console.log(list);
-      setLists(list);
-      return list;
-    });
-  };
+      }
+    }
+    for (let i = 0; i < tempDatasets.length; i++) {
+      tempDatasetbackcol.push(palete[i]);
+    }
+    setData(
+      produce((draft) => {
+        draft.labels = tempLabels;
+        draft.datasets[0]["data"] = tempDatasets;
+        draft.datasets[0]["borderColor"] = tempDatasetbackcol;
+        draft.datasets[0]["backgroundColor"] = tempDatasetbackcol;
+        return draft;
+      })
+    );
+  }
+  async function makeData1() {
+    const response = await Axios.get("/json/sung1.json");
+    const jsondata = response.data.position;
+    const tempLabels = [];
+    const tempDatasets = [];
+    const tempDatasetbackcol = [];
+    for (let i = 0; i < jsondata.length; i++) {
+      if (window.sessionStorage.getItem("gu") === jsondata[i].gu) {
+        if (window.sessionStorage.getItem("dong") === jsondata[i].dong) {
+          tempLabels.push(jsondata[i].gil);
+          tempDatasets.push(jsondata[i].totalscore);
+        }
+      }
+    }
+    for (let i = 0; i < tempDatasets.length; i++) {
+      tempDatasetbackcol.push(palete[i]);
+    }
+    setData1(
+      produce((draft) => {
+        draft.labels = tempLabels;
+        draft.datasets[0]["data"] = tempDatasets;
+        draft.datasets[0]["borderColor"] = tempDatasetbackcol;
+        draft.datasets[0]["backgroundColor"] = tempDatasetbackcol;
+        return draft;
+      })
+    );
+  }
+  async function makeData2() {
+    const response = await Axios.get("/json/people.json");
+    const jsondata = response.data.position;
+    const tempLabels = [];
+    const tempDatasets = [];
+    const tempDatasetbackcol = [];
+    for (let i = 0; i < jsondata.length; i++) {
+      if (window.sessionStorage.getItem("gu") === jsondata[i].gu) {
+        if (window.sessionStorage.getItem("dong") === jsondata[i].dong) {
+          tempLabels.push(jsondata[i].gil);
+          tempDatasets.push(jsondata[i].totalscore);
+        }
+      }
+    }
+    for (let i = 0; i < tempDatasets.length; i++) {
+      tempDatasetbackcol.push(palete[i]);
+    }
+
+    setData2(
+      produce((draft) => {
+        draft.labels = tempLabels;
+        draft.datasets[0]["data"] = tempDatasets;
+        draft.datasets[0]["borderColor"] = tempDatasetbackcol;
+        draft.datasets[0]["backgroundColor"] = tempDatasetbackcol;
+        return draft;
+      })
+    );
+  }
+  async function makeData3() {
+    const response = await Axios.get("/json/sang.json");
+    const jsondata = response.data.position;
+    const tempLabels = [];
+    const tempDatasets = [];
+    const tempDatasetbackcol = [];
+    for (let i = 0; i < jsondata.length; i++) {
+      if (window.sessionStorage.getItem("gu") === jsondata[i].gu) {
+        if (window.sessionStorage.getItem("dong") === jsondata[i].dong) {
+          tempLabels.push(jsondata[i].gil);
+          tempDatasets.push(jsondata[i].totalscore);
+        }
+      }
+    }
+    for (let i = 0; i < tempDatasets.length; i++) {
+      tempDatasetbackcol.push(palete[i]);
+    }
+    setData3(
+      produce((draft) => {
+        draft.labels = tempLabels;
+        draft.datasets[0]["data"] = tempDatasets;
+        draft.datasets[0]["borderColor"] = tempDatasetbackcol;
+        draft.datasets[0]["backgroundColor"] = tempDatasetbackcol;
+        return draft;
+      })
+    );
+  }
+
+  useEffect(() => {
+    makeData();
+    makeData1();
+    makeData2();
+    makeData3();
+  }, []);
   return (
     <>
       <div className="page1">
-        <Bar width={300} width={200} data={function name(params) {
-          console.log(lists); testdatapro();
-        }} options={{
-            title:{
-              display:true,
-              text:'서울',
-              fontSize:20
+        <Bar
+          width={300}
+          height={100}
+          data={data}
+          options={{
+            title: {
+              display: true,
+              text: dong + " 구매력",
+              fontSize: 20,
             },
-            legend:{
-              display:true,
-              position:'right'
-            }
-          }}></Bar>
-        <Bubble></Bubble>
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    min: 0, // 스케일에 대한 최솟갓 설정, 0 부터 시작
+                    stepSize: 10, // 스케일에 대한 사용자 고정 정의 값
+                  },
+                },
+              ],
+            },
+            legend: {
+              display: false,
+              position: "right",
+            },
+          }}
+        ></Bar>
+        <Bar
+          width={300}
+          height={100}
+          data={data1}
+          options={{
+            title: {
+              display: true,
+              text: dong + " 성장성",
+              fontSize: 20,
+            },
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    min: 0, // 스케일에 대한 최솟갓 설정, 0 부터 시작
+                    stepSize: 10, // 스케일에 대한 사용자 고정 정의 값
+                  },
+                },
+              ],
+            },
+            legend: {
+              display: false,
+              position: "right",
+            },
+          }}
+        ></Bar>
+        <Bar
+          width={300}
+          height={100}
+          data={data2}
+          options={{
+            title: {
+              display: true,
+              text: dong + " 집객력",
+              fontSize: 20,
+            },
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    min: 0, // 스케일에 대한 최솟갓 설정, 0 부터 시작
+                    stepSize: 10, // 스케일에 대한 사용자 고정 정의 값
+                  },
+                },
+              ],
+            },
+            legend: {
+              display: false,
+              position: "right",
+            },
+          }}
+        ></Bar>
+        <Bar
+          width={300}
+          height={100}
+          data={data3}
+          options={{
+            title: {
+              display: true,
+              text: dong + " 상권지표",
+              fontSize: 20,
+            },
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    min: 0, // 스케일에 대한 최솟갓 설정, 0 부터 시작
+                    stepSize: 10, // 스케일에 대한 사용자 고정 정의 값
+                  },
+                },
+              ],
+            },
+            legend: {
+              display: false,
+              position: "right",
+            },
+          }}
+        ></Bar>
+
+        {/* <Doughnut
+          width={300}
+          height={200}
+          data={data}
+          options={{
+            title: {
+              display: true,
+              text: "서울시",
+              fontSize: 20,
+            },
+            legend: {
+              display: true,
+              position: "right",
+            },
+          }}
+        ></Doughnut> */}
       </div>
     </>
   );

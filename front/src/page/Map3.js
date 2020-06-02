@@ -53,7 +53,6 @@ const Map3 = () => {
             jsondata = data.data.positions;
 
             var markers = $(data.data.positions).map(function (i, position) {
-                console.log(window.sessionStorage.getItem("dong"))
               if (window.sessionStorage.getItem("dong") === position.dong) {
                 return new kakao.maps.Marker({
                   position: new kakao.maps.LatLng(position.x, position.y),
@@ -97,7 +96,6 @@ const Map3 = () => {
       <form onSubmit={OnSubmit}>
         <input type="submit" value="전송"></input>
       </form>
-      
     </>
   );
 };
