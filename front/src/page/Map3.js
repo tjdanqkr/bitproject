@@ -56,34 +56,27 @@ const Map3 = () => {
             var markers = $(data.data.positions).map(function (i, position) {
               if (window.sessionStorage.getItem("dong") === position.dong) {
                 if (fa === position.class) {
+                  customOverlay.setContent(
+                    '<div class="wrap">' +
+                      '    <div class="info">' +
+                      '        <div class="title">' +
+                      position.name +
+                      '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                      "        </div>" +
+                      '        <div class="body">' +
+                      '            <div class="desc">' +
+                      '                <div class="ellipsis">' +
+                      position.address +
+                      "</div>" +
+                      "            </div>" +
+                      "        </div>" +
+                      "    </div>" +
+                      "</div>"
+                  );
                   return new kakao.maps.Marker({
                     position: new kakao.maps.LatLng(position.x, position.y),
                   });
                 }
-              }
-            });
-            var markerEvent = $(data.data.positions).map(function (
-              i,
-              position
-            ) {
-              if (window.sessionStorage.getItem("dong") === position.dong) {
-                return (
-                  '<div class="wrap">' +
-                  '    <div class="info">' +
-                  '        <div class="title">' +
-                  position.name +
-                  '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
-                  "        </div>" +
-                  '        <div class="body">' +
-                  '            <div class="desc">' +
-                  '                <div class="ellipsis">' +
-                  position.address +
-                  "</div>" +
-                  "            </div>" +
-                  "        </div>" +
-                  "    </div>" +
-                  "</div>"
-                );
               }
             });
 
@@ -101,11 +94,11 @@ const Map3 = () => {
 
             // 마커 위에 커스텀오버레이를 표시합니다
             // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
-
+            console.log(customOverlay.getContent());
             var overlay = new kakao.maps.CustomOverlay({
-              content: markerEvent(),
               map: map,
               position: markers.getPosition(),
+              content: customOverlay.getContent(),
             });
 
             // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
@@ -132,7 +125,7 @@ const Map3 = () => {
       gu: window.sessionStorage.getItem("gu"),
       dong: dong,
     };
-    fetch("/graph", {
+    fetch("/json1", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -141,6 +134,7 @@ const Map3 = () => {
     })
       .then((response) => response.text())
       .then((message) => {
+        console.log(message);
         window.sessionStorage.setItem("message", message);
         window.location.replace("/graph1");
       });

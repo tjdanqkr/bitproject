@@ -66,16 +66,48 @@ function Graphpage1() {
       },
     ],
   });
+  const palete2 = [
+    "rgb(255,155,255)",
+    "rgb(255,55,255)",
+    "rgb(55,155,255)",
+    "rgb(55,0,255)",
+    "rgb(0,0,155)",
+    "rgb(0,0,55)",
+    "rgb(0,0,0)",
+    "rgb(0,255,0)",
+    "rgb(55,255,0)",
+    "rgb(255,0,155)",
+    "rgb(255,55,55)",
+    "rgb(255,55,155)",
+    "rgb(255,155,255)",
+    "rgb(255,255,255)",
+  ];
+  const palete1 = [
+    "rgb(255,255,155)",
+    "rgb(255,255,55)",
+    "rgb(255,55,155)",
+    "rgb(255,55,0)",
+    "rgb(155,0,0)",
+    "rgb(55,0,0)",
+    "rgb(0,0,0)",
+    "rgb(0,0,255)",
+    "rgb(0,55,255)",
+    "rgb(155,255,0)",
+    "rgb(55,255,55)",
+    "rgb(155,255,55)",
+    "rgb(255,255,155)",
+    "rgb(255,255,255)",
+  ];
   const palete = [
-    "rgb(155,255,255)",
+    "rgb(155,255,255,)",
     "rgb(55,255,255)",
     "rgb(55,155,255)",
     "rgb(55,0,255)",
     "rgb(0,0,155)",
     "rgb(0,0,55)",
     "rgb(0,0,0)",
-    "rgb(255,0,0)",
-    "rgb(255,0,55)",
+    "rgb(0,255,0)",
+    "rgb(55,255,0)",
     "rgb(255,0,155)",
     "rgb(255,55,55)",
     "rgb(255,55,155)",
@@ -124,7 +156,7 @@ function Graphpage1() {
       }
     }
     for (let i = 0; i < tempDatasets.length; i++) {
-      tempDatasetbackcol.push(palete[i]);
+      tempDatasetbackcol.push(palete1[i]);
     }
     setData1(
       produce((draft) => {
@@ -151,7 +183,7 @@ function Graphpage1() {
       }
     }
     for (let i = 0; i < tempDatasets.length; i++) {
-      tempDatasetbackcol.push(palete[i]);
+      tempDatasetbackcol.push(palete2[i]);
     }
 
     setData2(
